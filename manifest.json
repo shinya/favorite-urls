@@ -1,0 +1,35 @@
+{
+	"manifest_version": 2,
+	"name" : "Frequent Access",
+	"version" : "0.0.1",
+	"description" : "よくアクセスするURLはお気に入り？いいえ、このツールにまとめましょう",
+	"browser_action" : {
+//		"default_icon" : "icon/main.png",
+		"default_title" : "よく使うURL達",
+		"default_popup" : "popup.html"
+	}
+/*
+	"icons": {
+		"48"  : "icon/size48.png",
+		"64"  : "icon/size64.png",
+		"128" : "icon/size128.png"
+	}
+*/
+/*
+	"background" : {
+		"page": "background.html"
+	},
+	"content_scripts" : [{
+
+		"matches" : [
+		             "https://local.general.manage/sales/voice"
+		],
+		"js": ["js/jquery-1.9.1.min.js", "js/speech.js"],
+		"css": ["css/bootstrap.min.css"],
+		"run_at": "document_end"
+
+	}],
+ */
+//	"permissions" : ["http://*/*", "https://*/*"]
+}
+

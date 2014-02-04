@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/todc-bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/setting.css">
+
+
+	<script src="js/jquery-1.9.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/setting.js"></script>
+
+
+<title>設定</title>
+</head>
+<body>
+
+	<div class="main row-fluid">
+		<h3 class="title">URL管理</h3>
+		<button id="save" class="btn btn-primary">保存</button>
+		<button id="read" class="btn">読込</button>
+		<button id="generate" class="btn btn-success">複製</button><br>
+		<input type="text" value="" placeholder="あいうえお" />
+		<div id="choko">http://yahoo.co.jp</div>
+	</div>
+
+	<div class="list"></div>
+
+	<div class="well data-set span3 model hide">
+		<div class="close">&times;</div>
+		<div class="row-fluid">
+			<input class="row-fluid" name="sid" type="text" value="" placeholder="service id" />
+			<input class="row-fluid" name="name" type="text" value="" placeholder="site name" />
+			<input class="row-fluid" name="url" type="text" value="" placeholder="url" />
+			<button class="btn btn-info saving">保存</button>
+		</div>
+	</div>
+
+
+</body>
+</html>
