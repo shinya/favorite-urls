@@ -16,3 +16,7 @@ body {
 	padding: 0;
 	top: -10px;
 }
+
+.alert {
+	display:none;
+}
