@@ -34,6 +34,7 @@
 	 * 渡ってきたｊｓｏｎを保存する
 	 */
 	function jsonSave(data){
+		methods.saveData(data);
 		console.log(data);
 	}
 
@@ -58,10 +59,12 @@
 				if(!isUrl){
 					popup("URLの形式がただしくありません", 'danger');
 				}else{
-					var result = {};
-					result[sidStr] = {
-						name: nameStr,
-						url: urlStr,
+					var result = {
+						site_id: sidStr,
+						contents : {
+							name: nameStr,
+							url: urlStr,
+						},
 					};
 				}
 			}else{
@@ -73,7 +76,7 @@
 				jsonSave( result );
 			}
 
-			//			console.log(sidStr, nameStr, urlStr);
+//			console.log(sidStr, nameStr, urlStr);
 
 		});
 
@@ -114,10 +117,24 @@
 			}else{
 				alert(result.msg);
 			}
+
+			console.log(localStorage);
 		});
 
 		// 生成処理
 		generate();
+
+		// クリア処理
+		$('#clear').click(function(){
+
+			if(confirm('全データを削除しますか？')){
+				if(confirm('ほんとに削除しますか？元に戻せないですよ？')){
+					if(confirm('後悔しませんね？')){
+						methods.clear();
+					}
+				}
+			}
+		});
 
 	});
 })();

@@ -16,6 +16,15 @@ var methods = {
 		console.log('saved.');
 	},
 
+	saveData: function(data){
+		if(data){
+			localStorage[ data['site_id'] ] = data['contents'];
+		}else{
+			console.log('Boo!');
+		}
+
+	},
+
 	load: function(id){
 
 		if(!id){
@@ -44,6 +53,10 @@ var methods = {
 
 		return ret;
 
+	},
+
+	clear: function(){
+		localStorage.clear();
 	},
 
 	msg: function(args){
