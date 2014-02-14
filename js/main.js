@@ -18,7 +18,8 @@ var methods = {
 
 	saveData: function(data){
 		if(data){
-			localStorage[ data['site_id'] ] = data['contents'];
+			localStorage[ data['site_id'] ] = JSON.stringify(data['contents']);
+//			console.log("saved data: " + localStorage[ data['site_id'] ]);
 		}else{
 			console.log('Boo!');
 		}
@@ -26,33 +27,42 @@ var methods = {
 	},
 
 	load: function(id){
+		var result;
 
-		if(!id){
-			return {
-				'status': false,
-				'msg': 'id is null',
-			};
+		if(id){
+			result = JSON.parse(localStorage[id]);
+		}else{
+			result = new Array();
+
+			for(var i in localStorage){
+				data = JSON.parse(localStorage[i]);
+				result[i] = data;
+			}
 		}
+		return result;
+	},
 
-		var url = localStorage[id+'_url'];
-		var name = localStorage[name+'_name'];
+	open: function(id, option){
 
-		if(!url){
-			return {
-				'status' : false,
-				'msg': 'url is null',
-			};
+		var result = JSON.parse(localStorage[id]);
+
+		if(!option && option == "post" && result.post_data){
+
+			//minify function
+//			fakePostCode = fakePost.toString().replace(/(\n|\t)/gm,'');
+
+			chrome.tabs.create({
+//				url : "javascript:"+fakePostCode+"; fakePost(" url + "," + JSON.stringify(data) + ");"
+				selected: true,
+				url : "javascript:fakePost(" + result.url + "," + JSON.stringify(result.post_data) + ");"
+			});
+		}else{
+			// タブを開く処理
+			chrome.tabs.create({
+				selected: true,
+				url: result.url,
+			});
 		}
-
-		ret = {
-			'status': true,
-			'msg': 'data is valid',
-			'url' : url,
-			'name': name,
-		};
-
-		return ret;
-
 	},
 
 	clear: function(){
@@ -61,5 +71,23 @@ var methods = {
 
 	msg: function(args){
 		alert(args);
+	},
+
+	fakePost: function(url, data){
+		data = JSON.parse(data);
+	    var form = document.createElement("form");
+	    form.setAttribute("method", "post");
+	    form.setAttribute("action", url);
+
+	    for(var key in data) {
+	        var hiddenField = document.createElement("input");
+	        hiddenField.setAttribute("type", "hidden");
+	        hiddenField.setAttribute("name", key);
+	        hiddenField.setAttribute("value", data[key]);
+	        form.appendChild(hiddenField);
+	    }
+	    document.body.appendChild(form);
+	    form.submit();
+	    document.body.removeChild(form);
 	},
 }
