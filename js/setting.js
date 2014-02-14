@@ -45,20 +45,57 @@
 			gen.find('[name=url]').val(data.url);
 			if(data.postdata){
 				gen.find('[name=ispost]').attr("checked", true )
-				gen.find('[name=id]').val(data.postdata.login_id);
-				gen.find('[name=pass]').val(data.postdata.login_id);
+				for(var i in data.postdata){
+					addBuddy(gen.find('.buddys'), data.postdata[i]);
+				}
 				gen.find('.postdata').show();
 			}
 			// URLを開く
 			gen.find('.openurl').click(function(){
 				openTab(data.site_id);
 			});
+
 		}else{
 			closing(gen);
 		}
 
+		// チェック処理
+		gen.find('[name=ispost]').click(function(){
+			if($(this).is(':checked')){
+				if($(this).parent().parent().find('.buddy').size() < 1){
+					addBuddy( $(this).parent().parent().find('.buddys') );
+				}
+				$(this).parent().nextAll('.postdata').show(300);
+			}else{
+				$(this).parent().nextAll('.postdata').hide(300);
+			}
+		});
+
+		// 要素の追加処理
+		gen.find('.add').click(function(){
+			addBuddy( $(this).parent('.postdata').children('.buddys') );
+		});
+
+
+
 		seq++;
 	}
+
+	function addBuddy(target, data){
+		var buddy = $('.buddy-model').clone();
+		buddy.removeClass('hide buddy-model').show();
+		buddy.find('.remove').click(function(){
+			$(this).parent('.buddy').remove();
+		});
+
+		if(data){
+			buddy.find('[name=ele-name]').val(data.name);
+			buddy.find('[name=ele-value]').val(data.value);
+		}
+		target.append(buddy);
+
+	}
+
 
 	/**
 	 * 初期の保存データ読み込み処理
@@ -83,19 +120,27 @@
 	 * 渡ってきたｊｓｏｎを保存する
 	 */
 	function jsonSave(data){
-		methods.saveData(data);
-		console.log(data);
+		for(var i in data){
+			methods.saveData(data[i]);
+			console.log(data[i]);
+		}
 	}
 
 	/**
 	 * urlデータの保存
 	 */
 	function saving(target){
+		var msg = '';
+		var saveData = new Array();
+		var error = 0;
+
 		$('.data-set').not('.model').each(function(){
 			var sid = $(this).find('.sid');
 			var name = $(this).find('[name=name]');
 			var url = $(this).find('[name=url]');
-			var post_data;
+			var postdata = new Array();
+			var postCheck = true;
+			var result = null;
 
 			sidStr = trim(sid.text());
 			sid.text(sidStr);
@@ -109,27 +154,34 @@
 
 			// postデータありの場合はそれもチェックする
 			if($(this).find('[name=ispost]').is(':checked')){
-				var login_id = $(this).find('[name=id]').val();
-				var pass = $(this).find('[name=pass]').val();
+				$(this).find('.buddy').each(function(){
+					var buddydata;
+					var name = $(this).find('[name=ele-name]').val();
+					var value = $(this).find('[name=ele-value]').val();
+					if(name && value){
+						buddydata = {
+							name: name,
+							value: value,
+						};
+						postdata.push(buddydata);
+					}else{
+						msg += "ログインデータが不正です。id:"+sidStr + "<br>";
+						postCheck = false;
+						error++;
+					}
+				});
 
-				if(login_id && pass){
-					postdata = {
-							login_id: login_id,
-							pass: pass,
-					};
-				}else{
-					popup("ログインデータがありません。id:"+sidStr, 'danger');
-				}
 			}else{
 				postdata = null;
 			}
 
 
-			if(sidStr && nameStr && urlStr){
+			if(sidStr && nameStr && urlStr && postCheck){
 				if(!isUrl){
-					popup("URLの形式がただしくありません。id:"+sidStr, 'danger');
+					msg += "URLの形式がただしくありません。id:"+sidStr+"<br>";
+					postCheck = false;
 				}else{
-					var result = {
+					result = {
 						site_id: sidStr,
 						contents : {
 							site_id: sidStr,
@@ -140,15 +192,28 @@
 					};
 				}
 			}else{
-				popup("パラメーターが正しく設定されていません。id:"+sidStr, 'danger');
+				if(postCheck){
+					msg += "パラメーターが正しく設定されていません。id:"+sidStr+"<br>";
+					postCheck = false;
+				}
 			}
 
 			// データが正しければ保存を行う
 			if(result){
-				jsonSave( result );
+				saveData.push(result);
+			}else{
+				error++;
 			}
-
 		});
+
+		// データが正しければ保存を行う
+		if(saveData.length > 0 && error < 1){
+			jsonSave( saveData );
+			popup('保存しました', 'success');
+		}else{
+			alert(saveData.length + " " + error);
+			popup(msg, 'danger');
+		}
 
 	}
 
@@ -161,10 +226,10 @@
 		}
 
 		var target = $(type);
-		target.text(str).fadeIn(500);
+		target.html(str).fadeIn(500);
 		setTimeout(function(){
 			target.fadeOut(1000,function(){
-				$(this).text('');
+				$(this).html('');
 			});
 		},2000);
 	}
@@ -188,15 +253,6 @@
 
 		// 保存されているデータを読み込む
 		initLoad();
-
-		// チェック処理
-		$('[name=ispost]').click(function(){
-			if($(this).is(':checked')){
-				$(this).parent().nextAll('.postdata').show(300);
-			}else{
-				$(this).parent().nextAll('.postdata').hide(300);
-			}
-		})
 
 		// クリア処理
 		$('#clear').click(function(){

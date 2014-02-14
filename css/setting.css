@@ -18,8 +18,20 @@ body {
 	padding: 0;
 	top: -10px;
 }
+
+.remove {
+	display: block;
+	position: relative;
+	font-size: 16px;
+	margin: 0;
+	padding: 0;
+	top: 6px;
+	cursor: pointer;
+}
+
 .postdata {
 	display:none;
+	padding-bottom: 10px;
 }
 
 .sid {

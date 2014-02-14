@@ -42,19 +42,39 @@ var methods = {
 		return result;
 	},
 
-	open: function(id, option){
+	open: function(id){
+		function fakePost(url, data){
+			data = JSON.parse(data);
+		    var form = document.createElement("form");
+		    form.setAttribute("method", "post");
+		    form.setAttribute("action", url);
+
+		    for(var key in data) {
+		        var hiddenField = document.createElement("input");
+		        hiddenField.setAttribute("type", "hidden");
+		        hiddenField.setAttribute("name", key);
+		        hiddenField.setAttribute("value", data[key]);
+		        form.appendChild(hiddenField);
+		    }
+		    document.body.appendChild(form);
+		    form.submit();
+		    document.body.removeChild(form);
+
+		};
+
 
 		var result = JSON.parse(localStorage[id]);
 
-		if(!option && option == "post" && result.post_data){
-
+		if(result.postdata){
 			//minify function
-//			fakePostCode = fakePost.toString().replace(/(\n|\t)/gm,'');
+			fakePostCode = fakePost.toString().replace(/(\n|\t)/gm,'');
 
+			alert(result.url);
 			chrome.tabs.create({
-//				url : "javascript:"+fakePostCode+"; fakePost(" url + "," + JSON.stringify(data) + ");"
 				selected: true,
-				url : "javascript:fakePost(" + result.url + "," + JSON.stringify(result.post_data) + ");"
+				url : "javascript:"+fakePostCode+"; fakePost('" + result.url + "', '" + JSON.stringify(result.postdata) + "');"
+//				url : "javascript:"+fakePostCode+"; fakePost('" + result.url + "');"
+//				url : "javascript: fakePost(" + result.url + "," + JSON.stringify(result.postdata) + ");"
 			});
 		}else{
 			// タブを開く処理
@@ -73,21 +93,4 @@ var methods = {
 		alert(args);
 	},
 
-	fakePost: function(url, data){
-		data = JSON.parse(data);
-	    var form = document.createElement("form");
-	    form.setAttribute("method", "post");
-	    form.setAttribute("action", url);
-
-	    for(var key in data) {
-	        var hiddenField = document.createElement("input");
-	        hiddenField.setAttribute("type", "hidden");
-	        hiddenField.setAttribute("name", key);
-	        hiddenField.setAttribute("value", data[key]);
-	        form.appendChild(hiddenField);
-	    }
-	    document.body.appendChild(form);
-	    form.submit();
-	    document.body.removeChild(form);
-	},
 }

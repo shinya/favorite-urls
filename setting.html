@@ -35,6 +35,8 @@
 
 	<div class="list"></div>
 
+	<!-- 以下不可視項目 -->
+
 	<div class="well data-set span3 model hide">
 		<div class="close">&times;</div>
 		<div class="row-fluid">
@@ -43,12 +45,19 @@
 			<input class="row-fluid" name="url" type="text" value="" placeholder="http://" />
 			<label class="row-fluid small"><input type="checkbox" name="ispost">ログイン機能を利用する</label>
 			<div class="row-fluid postdata">
-				<input class="row-fluid span6" name="id" type="text" value="" placeholder="ユーザー名" />
-				<input class="row-fluid span6" name="pass" type="password" value="" placeholder="パスワード" />
+				<div class="buddys"></div>
+				<button class="btn btn-small pull-right add">追加</button>
 			</div>
 			<button class="btn btn-info saving hide">保存</button>
 			<button class="btn btn-success openurl">URLを開く</button>
 		</div>
+
+	</div>
+
+	<div class="span12 buddy hide buddy-model">
+		<span class="row-fluid span1 remove">&times;</span>
+		<input class="row-fluid span5" name="ele-name" type="text" value="" placeholder="名前" />
+		<input class="row-fluid span6" name="ele-value" type="text" value="" placeholder="値" />
 	</div>
 
 
