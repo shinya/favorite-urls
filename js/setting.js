@@ -297,6 +297,14 @@
 			}
 		});
 
+		$('#get').click(function(){
+			if(confirm('開いているタブのデータを保存しますか？')){
+				methods.getTabData();
+				setTimeout(function(){
+					location.reload();
+				},200);
+			}
+		});
 
 	});
 })();
