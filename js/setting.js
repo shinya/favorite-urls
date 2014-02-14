@@ -292,6 +292,7 @@
 
 		$('#get').click(function(){
 			methods.getTabData();
+			methods.getMaxIndex();
 		});
 
 	});

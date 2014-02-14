@@ -26,6 +26,22 @@ var methods = {
 
 	},
 
+	// 開いているタブを保存する場合の処理
+	saveFromTabs: function(data){
+
+	},
+
+	getMaxIndex: function(){
+		var buf = -1;
+		for(var i in localStorage){
+			if(buf < i){
+				buf = parseInt(i);
+			}
+		}
+		alert(buf);
+		return buf;
+	},
+
 	load: function(id){
 		var result;
 
