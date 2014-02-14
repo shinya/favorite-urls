@@ -39,6 +39,12 @@
 			});
 		});
 
+		// タブデータの保存
+		$('#get').click(function(){
+			methods.getTabData();
+			window.close();
+			return false;
+		});
 
 
 	});

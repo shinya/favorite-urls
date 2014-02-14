@@ -7,12 +7,17 @@
 	 */
 	function closing(target){
 		target.children('.close').click(function(){
-			if(confirm('削除しますか？')){
-				id = target.find('.sid').text();
-				methods.del(id);
-				$(this).parent('.data-set').remove();
+			if(target.find('.issaved').text() == 'true'){
+				if(confirm('削除しますか？')){
+					id = target.find('.sid').text();
+					methods.del(id);
+					$(this).parent('.data-set').remove();
 
-				popup('削除しました', 'success');
+					popup('削除しました', 'success');
+				}
+			}else{
+				// 一度も保存されていなければそのまま削除
+				$(this).parent('.data-set').remove();
 			}
 		});
 	}
@@ -76,7 +81,8 @@
 		gen.find('.openurl').click(function(){
 			var issaved = $(this).parents('.data-set').find('.issaved').text();
 			if(issaved == 'true'){
-				openTab(data.site_id);
+//				openTab(data.site_id);
+				openTabUrl($(this).parents('.data-set').find('[name=url]').val());
 			}else{
 				openTabUrl($(this).parents('.data-set').find('[name=url]').val());
 			}
@@ -225,6 +231,7 @@
 			// データが正しければ保存を行う
 			if(result){
 				saveData.push(result);
+				$(this).find('.issaved').text('true');
 			}else{
 				error++;
 				$(this).addClass('validate');
@@ -290,10 +297,6 @@
 			}
 		});
 
-		$('#get').click(function(){
-			methods.getTabData();
-			methods.getMaxIndex();
-		});
 
 	});
 })();

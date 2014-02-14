@@ -26,11 +26,6 @@ var methods = {
 
 	},
 
-	// 開いているタブを保存する場合の処理
-	saveFromTabs: function(data){
-
-	},
-
 	getMaxIndex: function(){
 		var buf = -1;
 		for(var i in localStorage){
@@ -38,7 +33,10 @@ var methods = {
 				buf = parseInt(i);
 			}
 		}
-		alert(buf);
+
+		if(buf == -1){
+			buf = 0;
+		}
 		return buf;
 	},
 
@@ -113,6 +111,24 @@ var methods = {
 	},
 
 	getTabData: function(){
+		maxIndex = this.getMaxIndex();
+
+		function saveFromTab(tabData){
+			var result;
+			if(tabData){
+				for(var i in tabData){
+					maxIndex++;
+					contents = {
+						site_id : maxIndex,
+						name : tabData[i].title,
+						url : tabData[i].url,
+					};
+
+					localStorage[ maxIndex ] = JSON.stringify( contents );
+					console.log(localStorage[ maxIndex ]);
+				}
+			}
+		};
 
 		chrome.tabs.getAllInWindow(null, function(tabs){
 			tabDatas = new Array();
@@ -128,7 +144,8 @@ var methods = {
 //					console.log(tabDatas);
 				}
 			}
-			console.log(tabDatas);
+//			console.log(tabDatas);
+			saveFromTab(tabDatas);
 		});
 
 		//ここに来たらコールバックのため、tabDatasの値が取れないからなんとかする必要がある
