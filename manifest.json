@@ -7,7 +7,7 @@
 //		"default_icon" : "icon/main.png",
 		"default_title" : "よく使うURL達",
 		"default_popup" : "popup.html"
-	}
+	},
 /*
 	"icons": {
 		"48"  : "icon/size48.png",
@@ -31,5 +31,6 @@
 	}],
  */
 //	"permissions" : ["http://*/*", "https://*/*"]
+	"permissions" : ["tabs"]
 }
 

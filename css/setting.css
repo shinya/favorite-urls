@@ -38,6 +38,12 @@ body {
 	margin: 4px 0px;
 }
 
+.validate {
+	color: #b94a48;
+	border-color: #eed3d7;
+	background: #f2dede;
+}
+
 .alert {
 	display:none;
 }

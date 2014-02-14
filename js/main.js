@@ -42,6 +42,10 @@ var methods = {
 		return result;
 	},
 
+	del: function(id){
+		localStorage.removeItem(id);
+	},
+
 	open: function(id){
 		function fakePost(url, data){
 			data = JSON.parse(data);
@@ -61,7 +65,6 @@ var methods = {
 		    document.body.removeChild(form);
 
 		};
-
 
 		var result = JSON.parse(localStorage[id]);
 
@@ -83,6 +86,37 @@ var methods = {
 				url: result.url,
 			});
 		}
+	},
+
+	openUrl: function(url){
+		// タブを開く処理
+		chrome.tabs.create({
+			selected: true,
+			url: url,
+		});
+	},
+
+	getTabData: function(){
+
+		chrome.tabs.getAllInWindow(null, function(tabs){
+			tabDatas = new Array();
+			for(var i in tabs){
+				var data;
+				if(tabs[i].url.indexOf("http", 0) == 0){
+					data = {
+						title: tabs[i].title,
+						url: tabs[i].url,
+						favicon: tabs[i].favIconUrl,
+					};
+					tabDatas.push(data);
+//					console.log(tabDatas);
+				}
+			}
+			console.log(tabDatas);
+		});
+
+		//ここに来たらコールバックのため、tabDatasの値が取れないからなんとかする必要がある
+
 	},
 
 	clear: function(){

@@ -26,9 +26,10 @@
 	<div class="main row span12">
 		<h3 class="title">URL管理</h3>
 		<button id="save" class="btn btn-primary">保存</button>
-		<button id="read" class="btn">全開</button>
+		<button id="read" class="btn">全てのURLを開く</button>
 		<button id="generate" class="btn btn-success">URLを追加</button>
 		<button id="clear" class="btn btn-danger">全削除</button>
+		<button id="get" class="btn">取得</button>
 		<br>
 		<input type="text" value="" placeholder="検索" />
 	</div>
@@ -40,7 +41,7 @@
 	<div class="well data-set span3 model hide">
 		<div class="close">&times;</div>
 		<div class="row-fluid">
-			<div class="label label-info sid"></div>
+			<div class="label label-info sid hide"></div>
 			<input class="row-fluid" name="name" type="text" value="" placeholder="サイト名" />
 			<input class="row-fluid" name="url" type="text" value="" placeholder="http://" />
 			<label class="row-fluid small"><input type="checkbox" name="ispost">ログイン機能を利用する</label>
@@ -52,6 +53,9 @@
 			<button class="btn btn-success openurl">URLを開く</button>
 		</div>
 
+		<div class="hide">
+			<div class="issaved">false</div>
+		</div>
 	</div>
 
 	<div class="span12 buddy hide buddy-model">

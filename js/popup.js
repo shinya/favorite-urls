@@ -18,9 +18,29 @@
 					'selected' : true,
 					'url' : result[i].url
 				});
-//						function(tab){}
 			}
 		});
+
+
+		result = methods.load();
+
+		for(var i in result){
+			var link = $('.model').clone();
+			link.removeClass('hide model');
+			link.children('a').attr('href', result[i].url).text(result[i].name).show();
+
+			$('.urls').append(link);
+		}
+
+		$('.url').children('a').click(function(){
+			chrome.tabs.create({
+				'selected' : true,
+				'url' : $(this).attr('href'),
+			});
+		});
+
+
+
 	});
 
 })();

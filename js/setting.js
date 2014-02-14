@@ -7,7 +7,13 @@
 	 */
 	function closing(target){
 		target.children('.close').click(function(){
-			$(this).parent('.data-set').remove();
+			if(confirm('削除しますか？')){
+				id = target.find('.sid').text();
+				methods.del(id);
+				$(this).parent('.data-set').remove();
+
+				popup('削除しました', 'success');
+			}
 		});
 	}
 
@@ -17,6 +23,14 @@
 	function openTab(id){
 //		methods.open(target.find('[name=url]').val());
 		methods.open(id);
+	}
+
+	/**
+	 * URLからタブを開く処理
+	 */
+	function openTabUrl(url){
+//		methods.open(target.find('[name=url]').val());
+		methods.openUrl(url);
 	}
 
 
@@ -50,14 +64,23 @@
 				}
 				gen.find('.postdata').show();
 			}
-			// URLを開く
-			gen.find('.openurl').click(function(){
-				openTab(data.site_id);
-			});
 
+			gen.find('.issaved').text('true');
 		}else{
-			closing(gen);
 		}
+
+		//　閉じるときの処理
+		closing(gen);
+
+		// URLを開く
+		gen.find('.openurl').click(function(){
+			var issaved = $(this).parents('.data-set').find('.issaved').text();
+			if(issaved == 'true'){
+				openTab(data.site_id);
+			}else{
+				openTabUrl($(this).parents('.data-set').find('[name=url]').val());
+			}
+		});
 
 		// チェック処理
 		gen.find('[name=ispost]').click(function(){
@@ -134,6 +157,8 @@
 		var saveData = new Array();
 		var error = 0;
 
+		$('.data-set').not('.model').removeClass('validate');
+
 		$('.data-set').not('.model').each(function(){
 			var sid = $(this).find('.sid');
 			var name = $(this).find('[name=name]');
@@ -165,7 +190,7 @@
 						};
 						postdata.push(buddydata);
 					}else{
-						msg += "ログインデータが不正です。id:"+sidStr + "<br>";
+						msg += "ログインデータが不正です。<br>";
 						postCheck = false;
 						error++;
 					}
@@ -175,25 +200,24 @@
 				postdata = null;
 			}
 
-
 			if(sidStr && nameStr && urlStr && postCheck){
 				if(!isUrl){
-					msg += "URLの形式がただしくありません。id:"+sidStr+"<br>";
+					msg += "URLの形式がただしくありません。<br>";
 					postCheck = false;
 				}else{
 					result = {
 						site_id: sidStr,
 						contents : {
-							site_id: sidStr,
-							name: nameStr,
-							url: urlStr,
-							postdata: postdata,
+							site_id : sidStr,
+							name : nameStr,
+							url : urlStr,
+							postdata : postdata,
 						},
 					};
 				}
 			}else{
 				if(postCheck){
-					msg += "パラメーターが正しく設定されていません。id:"+sidStr+"<br>";
+					msg += "パラメーターが正しく設定されていません。<br>";
 					postCheck = false;
 				}
 			}
@@ -203,6 +227,7 @@
 				saveData.push(result);
 			}else{
 				error++;
+				$(this).addClass('validate');
 			}
 		});
 
@@ -211,7 +236,6 @@
 			jsonSave( saveData );
 			popup('保存しました', 'success');
 		}else{
-			alert(saveData.length + " " + error);
 			popup(msg, 'danger');
 		}
 
@@ -264,6 +288,10 @@
 					}
 				}
 			}
+		});
+
+		$('#get').click(function(){
+			methods.getTabData();
 		});
 
 	});
