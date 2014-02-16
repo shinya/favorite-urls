@@ -4,11 +4,36 @@ body {
 	margin: 0;
 	padding: 0;
 }
-
+.main {
+	padding-bottom: 20px;
+}
 
 .data-set {
 	position: relative;
 }
+
+.add-data-set {
+	position: relative;
+	width: 254px;
+	height: 160px;
+/*
+	border: solid 2px #dddddd;
+	background: #fafafa;
+*/
+}
+#generate {
+	position: absolute;
+	width: 140px;
+	height: 140px;
+	left: 50%;
+	margin-left: -70px;
+	top: 50%;
+	margin-top: -70px;
+	text-align: center;
+	cursor: pointer;
+	background: url("../img/plus.png") no-repeat;
+}
+
 
 .close {
 	display: block;
@@ -46,4 +71,11 @@ body {
 
 .alert {
 	display:none;
+	position: fixed;
+	width: 60%;
+	left: 50%;
+	margin-left: -30%;
+	top: 10px;
+	opacity: 1;
+	z-index: 999;
 }

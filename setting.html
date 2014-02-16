@@ -8,14 +8,14 @@
 	<link rel="stylesheet" type="text/css" href="css/todc-bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/setting.css">
 
-
 	<script src="js/jquery-1.9.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/main.js"></script>
+	<script src="js/languege.js"></script>
 	<script src="js/setting.js"></script>
 
 
-<title>設定</title>
+<title>Setting</title>
 </head>
 <body>
 
@@ -24,17 +24,25 @@
 	<div class="alert alert-success"></div>
 
 	<div class="main row-fluid span12">
-		<h3 class="title">URL管理</h3>
-		<button id="save" class="btn btn-primary">一括保存</button>
-		<button id="read" class="btn">全てのURLを開く</button>
-		<button id="generate" class="btn btn-info">URLを追加</button>
-		<button id="get" class="btn">タブデータ取得</button>
-		<button id="clear" class="btn btn-danger">全削除</button>
-		<br>
+		<h3 class="title">Frequent Access</h3>
+
+		<button id="save" class="btn btn-primary">Save All</button>
+		<button id="read" class="btn">Open All URL</button>
+		<button id="get" class="btn">Save Opened Tab's URL</button>
+		<button id="clear" class="btn btn-danger">Reset</button><br>
+		<label class=""><input type="checkbox" name="lang-setting">言語設定</label>
+		<select class="lang-select hide"></select>
+<!--
 		<input type="text" value="" placeholder="検索" />
+-->
 	</div>
 
 	<div class="list"></div>
+	<div class="add-data-set span3">
+		<div id="generate" class="">
+		&nbsp;
+		</div>
+	</div>
 
 	<!-- 以下不可視項目 -->
 
@@ -44,13 +52,14 @@
 			<div class="label label-info sid hide"></div>
 			<input class="row-fluid" name="name" type="text" value="" placeholder="サイト名" />
 			<input class="row-fluid" name="url" type="text" value="" placeholder="http://" />
-			<label class="row-fluid small"><input type="checkbox" name="ispost">ログイン機能を利用する</label>
+			<input type="hidden" name="favicon" value="" />
+			<label class="row-fluid small hide"><input type="checkbox" name="ispost">Use Login Params</label>
 			<div class="row-fluid postdata">
 				<div class="buddys"></div>
-				<button class="btn btn-small pull-right add">追加</button>
+				<button class="btn btn-small pull-right add">Add</button>
 			</div>
-			<button class="btn btn-info saving hide">保存</button>
-			<button class="btn btn-success openurl">URLを開く</button>
+			<button class="btn btn-primary saving">Save</button>
+			<button class="btn openurl">Open URL</button>
 		</div>
 
 		<div class="hide">

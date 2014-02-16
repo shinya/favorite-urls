@@ -3,6 +3,60 @@
 	var seq = 1;
 
 	/**
+	 * 保存されている言語設定を読み込んで反映する
+	 */
+	function loadLanguege(){
+		var lang;
+		lang = methods.getLanguege();
+		if(!lang){
+			lang = languege.japanese;
+		}else{
+			lang = languege[lang];
+		}
+
+		$('.title').text(lang.title);
+		$('#save').text(lang.saveAll);
+		$('#read').text(lang.openAll);
+		$('#get').text(lang.saveTabs);
+		$('#clear').text(lang.reset);
+		$('.add').text(lang.add);
+		$('.saving').text(lang.save);
+		$('.openurl').text(lang.openUrl);
+	}
+
+	/**
+	 * 言語設定
+	 */
+	function initlanguege(){
+		loadLanguege();
+
+		// セレクトボックスの設定
+		var selects = $('.lang-select');
+		for(var i in languege){
+			selects.append(
+				$('<option></option>').text(languege[i].name).val(i)
+			);
+		}
+		lang = methods.getLanguege();
+		if(lang){
+			selects.val(lang);
+		}
+
+		selects.change(function(){
+			methods.setLanguege($(this).val());
+			loadLanguege();
+		});
+
+		$('[name=lang-setting]').click(function(){
+			if($(this).is(':checked')){
+				selects.show(300);
+			}else{
+				selects.hide(300);
+			}
+		});
+	}
+
+	/**
 	 * ×ボタンをおした時の挙動
 	 */
 	function closing(target){
@@ -26,7 +80,6 @@
 	 * タブを開く処理
 	 */
 	function openTab(id){
-//		methods.open(target.find('[name=url]').val());
 		methods.open(id);
 	}
 
@@ -34,7 +87,6 @@
 	 * URLからタブを開く処理
 	 */
 	function openTabUrl(url){
-//		methods.open(target.find('[name=url]').val());
 		methods.openUrl(url);
 	}
 
@@ -43,25 +95,28 @@
 	 * 全てのURLを開く処理
 	 */
 	function openTabAll(){
-		$('.data-set').not('.model').each(function(){
-			openTab($(this).find('.sid').text());
-		});
+		methods.openAtNewWindow();
 	}
 
+
 	/**
-	 * 新しいボックスの生成
+	 * ボックスの生成
 	 */
 	function generate(data){
 		var gen = $('.model').clone();
-		gen.removeClass('hide model').show();
+		gen.removeClass('hide model').hide();
 		$('.list').append(gen);
 
-		gen.find('.sid').text(seq);
-
+		//　データが存在する場合は設定する
 		if(data){
+			if(seq < parseInt(data.site_id)){
+				seq = parseInt(data.site_id);
+			}
 			console.log(data);
+			gen.find('.sid').text(data.site_id);
 			gen.find('[name=name]').val(data.name);
 			gen.find('[name=url]').val(data.url);
+			gen.find('[name=favicon]').val(data.favicon);
 			if(data.postdata){
 				gen.find('[name=ispost]').attr("checked", true )
 				for(var i in data.postdata){
@@ -72,10 +127,20 @@
 
 			gen.find('.issaved').text('true');
 		}else{
+			seq++;
+			gen.find('.sid').text(seq);
 		}
 
 		//　閉じるときの処理
 		closing(gen);
+
+		// 個別保存処理
+		gen.find('.saving').click(function(){
+			result = save(gen, true);
+			if(result){
+				popup(result.msg,'danger');
+			}
+		});
 
 		// URLを開く
 		gen.find('.openurl').click(function(){
@@ -88,7 +153,7 @@
 			}
 		});
 
-		// チェック処理
+		// チェックボックス処理
 		gen.find('[name=ispost]').click(function(){
 			if($(this).is(':checked')){
 				if($(this).parent().parent().find('.buddy').size() < 1){
@@ -100,16 +165,19 @@
 			}
 		});
 
-		// 要素の追加処理
+		// post要素の追加処理
 		gen.find('.add').click(function(){
 			addBuddy( $(this).parent('.postdata').children('.buddys') );
 		});
 
+		// 表示する
+		gen.show(300);
 
-
-		seq++;
 	}
 
+	/**
+	 * 名前と値の欄のペアを追加する
+	 */
 	function addBuddy(target, data){
 		var buddy = $('.buddy-model').clone();
 		buddy.removeClass('hide buddy-model').show();
@@ -122,18 +190,18 @@
 			buddy.find('[name=ele-value]').val(data.value);
 		}
 		target.append(buddy);
-
 	}
 
 
 	/**
-	 * 初期の保存データ読み込み処理
+	 * 初期読み込み処理
 	 */
 	function initLoad(){
 		result = methods.load();
 		for(var i in result){
 			generate(result[i]);
 		}
+
 	}
 
 	/**
@@ -141,12 +209,11 @@
 	 */
 	function trim(target){
 		var str = target.replace(/(^[\s　]+)|([\s　]+$)/g, "");
-//		target.val(str);
 		return str;
 	}
 
 	/**
-	 * 渡ってきたｊｓｏｎを保存する
+	 * 渡ってきたjsonを保存する
 	 */
 	function jsonSave(data){
 		for(var i in data){
@@ -156,90 +223,129 @@
 	}
 
 	/**
-	 * urlデータの保存
+	 * URLの保存処理
 	 */
-	function saving(target){
+	function save(target, individual){
+		var msg = '';
+
+		var sid = target.find('.sid');
+		var name = target.find('[name=name]');
+		var url = target.find('[name=url]');
+		var favicon = target.find('[name=favicon]').val();
+
+		var postdata = new Array();
+		var postCheck = true;
+		var result = null;
+
+		// エラー表示を消す
+		target.removeClass('validate');
+
+		sidStr = trim(sid.text());
+		sid.text(sidStr);
+
+		nameStr = trim(name.val());
+		name.val(nameStr);
+
+		urlStr = trim(url.val());
+		url.val(urlStr);
+		isUrl = urlStr.match(/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w-.\/?%&=]*)?/);
+
+		// postデータありの場合はそれもチェックする
+		if(target.find('[name=ispost]').is(':checked')){
+			target.find('.buddy').each(function(){
+				var buddydata;
+				var name = $(this).find('[name=ele-name]').val();
+				var value = $(this).find('[name=ele-value]').val();
+				if(name && value){
+					buddydata = {
+						name: name,
+						value: value,
+					};
+					postdata.push(buddydata);
+				}else{
+					msg += "ログインデータが不正です。<br>";
+					postCheck = false;
+					error++;
+				}
+			});
+
+		}else{
+			postdata = null;
+		}
+
+		if(sidStr && nameStr && urlStr && postCheck){
+			if(!isUrl){
+				msg += "URLの形式が正しくありません。<br>";
+				postCheck = false;
+			}else{
+				result = {
+					site_id: sidStr,
+					contents : {
+						site_id : sidStr,
+						name : nameStr,
+						url : urlStr,
+						favicon : favicon,
+						postdata : postdata,
+					},
+				};
+			}
+		}else{
+			if(postCheck){
+				msg += "情報が正しく入力されていません。<br>";
+				postCheck = false;
+			}
+		}
+
+		//　データチェック
+		if(result){
+			target.find('.issaved').text('true');
+
+			// 個別保存か否か判断
+			if(individual){
+				// 個別保存の場合。保存して終了
+				methods.saveData(result);
+				console.log(result);
+				popup('保存しました', 'success');
+				return;
+			}else{
+				// 一括保存の場合。データを返すだけ
+				return {
+					data: result,
+				}
+			}
+		}else{
+			target.addClass('validate');
+			return {
+				data: null,
+				msg: msg,
+			}
+		}
+
+	}
+
+
+
+	/**
+	 * 一括保存処理
+	 */
+	function saveAll(){
 		var msg = '';
 		var saveData = new Array();
 		var error = 0;
 
-		$('.data-set').not('.model').removeClass('validate');
-
 		$('.data-set').not('.model').each(function(){
-			var sid = $(this).find('.sid');
-			var name = $(this).find('[name=name]');
-			var url = $(this).find('[name=url]');
-			var postdata = new Array();
-			var postCheck = true;
-			var result = null;
-
-			sidStr = trim(sid.text());
-			sid.text(sidStr);
-
-			nameStr = trim(name.val());
-			name.val(nameStr);
-
-			urlStr = trim(url.val());
-			url.val(urlStr);
-			isUrl = urlStr.match(/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w-.\/?%&=]*)?/);
-
-			// postデータありの場合はそれもチェックする
-			if($(this).find('[name=ispost]').is(':checked')){
-				$(this).find('.buddy').each(function(){
-					var buddydata;
-					var name = $(this).find('[name=ele-name]').val();
-					var value = $(this).find('[name=ele-value]').val();
-					if(name && value){
-						buddydata = {
-							name: name,
-							value: value,
-						};
-						postdata.push(buddydata);
-					}else{
-						msg += "ログインデータが不正です。<br>";
-						postCheck = false;
-						error++;
-					}
-				});
-
+			result = save($(this));
+			if(result.data){
+				// 保存配列に追加
+				saveData.push( result.data );
 			}else{
-				postdata = null;
-			}
-
-			if(sidStr && nameStr && urlStr && postCheck){
-				if(!isUrl){
-					msg += "URLの形式がただしくありません。<br>";
-					postCheck = false;
-				}else{
-					result = {
-						site_id: sidStr,
-						contents : {
-							site_id : sidStr,
-							name : nameStr,
-							url : urlStr,
-							postdata : postdata,
-						},
-					};
-				}
-			}else{
-				if(postCheck){
-					msg += "パラメーターが正しく設定されていません。<br>";
-					postCheck = false;
-				}
-			}
-
-			// データが正しければ保存を行う
-			if(result){
-				saveData.push(result);
-				$(this).find('.issaved').text('true');
-			}else{
+				msg += result.msg;
 				error++;
-				$(this).addClass('validate');
 			}
 		});
 
 		// データが正しければ保存を行う
-		if(saveData.length > 0 && error < 1){
+		if(saveData.length > 0 && error == 0){
 			jsonSave( saveData );
 			popup('保存しました', 'success');
 		}else{
@@ -248,6 +354,9 @@
 
 	}
 
+	/**
+	 * アラートを出す
+	 */
 	function popup(str, type){
 
 		if(!type){
@@ -266,24 +375,32 @@
 	}
 
 
+	/**
+	 * メイン処理開始
+	 */
+	console.log("start:");
 	$(document).ready(function(){
-		// 保存処理
+		//言語設定
+		initlanguege()
+
+		// 保存されているデータを読み込む
+		initLoad();
+
+		// 保存処理の登録
 		$('#save').click(function(){
-			saving();
+			saveAll();
 		});
 
-		// 読込処理
+		// 読込処理の登録
 		$('#read').click(function(){
 			openTabAll();
 		});
 
-		// 生成処理
+		// 生成処理の登録
 		$('#generate').click(function(){
 			generate();
 		});
 
-		// 保存されているデータを読み込む
-		initLoad();
 
 		// クリア処理
 		$('#clear').click(function(){
@@ -297,6 +414,7 @@
 			}
 		});
 
+		//　タブ情報保存
 		$('#get').click(function(){
 			if(confirm('開いているタブのデータを保存しますか？')){
 				methods.getTabData();

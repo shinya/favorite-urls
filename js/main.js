@@ -1,31 +1,21 @@
 var methods = {
 	init: function(){},
 
-	save: function(id, url, name){
-
-		if(!(id && url && name)){
-			console.log('invalid.');
-			return false;
-		}
-
-		console.log(url, name);
-
-		localStorage[id+'_url'] = url;
-		localStorage[id+'_name'] = name;
-
-		console.log('saved.');
-	},
-
+	/**
+	 * 保存処理
+	 */
 	saveData: function(data){
 		if(data){
 			localStorage[ data['site_id'] ] = JSON.stringify(data['contents']);
-//			console.log("saved data: " + localStorage[ data['site_id'] ]);
+			console.log("saved data: " + localStorage[ data['site_id'] ]);
 		}else{
 			console.log('Boo!');
 		}
-
 	},
 
+	/**
+	 * localStorageのKey値の最大値を取得する
+	 */
 	getMaxIndex: function(){
 		var buf = -1;
 		for(var i in localStorage){
@@ -40,6 +30,9 @@ var methods = {
 		return buf;
 	},
 
+	/**
+	 * 保存されているURL情報を取得する
+	 */
 	load: function(id){
 		var result;
 
@@ -49,6 +42,9 @@ var methods = {
 			result = new Array();
 
 			for(var i in localStorage){
+				if(i == "lang"){
+					continue;
+				}
 				data = JSON.parse(localStorage[i]);
 				result[i] = data;
 			}
@@ -56,10 +52,40 @@ var methods = {
 		return result;
 	},
 
+	/**
+	 * 指定されたidのデータを削除する
+	 */
 	del: function(id){
 		localStorage.removeItem(id);
 	},
 
+	/**
+	 * 新しいChromeのウインドウを立ち上げてURLを開く
+	 */
+	openAtNewWindow: function(id){
+		data = this.load();
+		data.shift(); //最初のデータを削除
+
+		chrome.windows.create({
+			url: data[0].url
+		},
+		function (window){
+			for(var i in data){
+				if(i==0){
+					continue;
+				}
+				chrome.tabs.create({
+					windowId: window.id,
+					selected: true,
+					url: data[i].url,
+				});
+			}
+		});
+	},
+
+	/**
+	 * タブを開く
+	 */
 	open: function(id){
 		function fakePost(url, data){
 			data = JSON.parse(data);
@@ -102,6 +128,9 @@ var methods = {
 		}
 	},
 
+	/**
+	 * 指定されたURLを新しいタブで開く
+	 */
 	openUrl: function(url){
 		// タブを開く処理
 		chrome.tabs.create({
@@ -110,6 +139,9 @@ var methods = {
 		});
 	},
 
+	/**
+	 * 現在開いているタブのデータを取得して保存する
+	 */
 	getTabData: function(){
 		maxIndex = this.getMaxIndex();
 
@@ -122,6 +154,7 @@ var methods = {
 						site_id : maxIndex,
 						name : tabData[i].title,
 						url : tabData[i].url,
+						favicon : tabData[i].favicon
 					};
 
 					localStorage[ maxIndex ] = JSON.stringify( contents );
@@ -141,23 +174,40 @@ var methods = {
 						favicon: tabs[i].favIconUrl,
 					};
 					tabDatas.push(data);
-//					console.log(tabDatas);
 				}
 			}
-//			console.log(tabDatas);
 			saveFromTab(tabDatas);
 		});
-
-		//ここに来たらコールバックのため、tabDatasの値が取れないからなんとかする必要がある
-
 	},
 
+	/**
+	 * localStorageのデータをクリアする
+	 */
 	clear: function(){
 		localStorage.clear();
 	},
 
+	/**
+	 * アラート。多分使わない
+	 */
 	msg: function(args){
 		alert(args);
 	},
+
+	/**
+	 * 言語設定を取得する
+	 */
+	getLanguege: function(){
+		lang = localStorage["lang"];
+		console.log(lang);
+		return lang;
+	},
+
+	/**
+	 * 言語設定を保存する
+	 */
+	setLanguege: function(lang){
+		localStorage["lang"] = lang;
+	}
 
 }

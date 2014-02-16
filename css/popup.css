@@ -7,6 +7,26 @@ body {
 }
 
 .main {
+	position: relative;
 	padding: 0px;
-	width: 200px;
+	width: 300px;
+}
+
+.url {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+}
+
+.url a {
+	position: relative;
+	display: inline-block;
+	width: 80%;
+	background: #ccffcc;
+	overflow: hidden;
+}
+
+.icon {
+	width: 16px;
+	height: 16px;
 }

@@ -12,13 +12,7 @@
 		});
 
 		$('#open').click(function(){
-			result = methods.load();
-			for(var i in result){
-				chrome.tabs.create({
-					'selected' : true,
-					'url' : result[i].url
-				});
-			}
+			methods.openAtNewWindow();
 		});
 
 
@@ -28,6 +22,19 @@
 			var link = $('.model').clone();
 			link.removeClass('hide model');
 			link.children('a').attr('href', result[i].url).text(result[i].name).show();
+
+			if(result[i].favicon){
+				link.prepend(
+						$('<img>')
+						.attr('src', result[i].favicon)
+						.addClass('icon')
+				);
+			}else{
+				link.prepend(
+					$('<i></i>')
+					.addClass('icon-star-empty')
+				);
+			}
 
 			$('.urls').append(link);
 		}
