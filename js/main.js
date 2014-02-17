@@ -1,6 +1,10 @@
 var methods = {
 	init: function(){},
 
+	zeroPadding: function ( val ) {
+		return ( "00" + val ).slice( -3 )
+	},
+
 	/**
 	 * 保存処理
 	 */
@@ -46,7 +50,7 @@ var methods = {
 					continue;
 				}
 				data = JSON.parse(localStorage[i]);
-				result[i] = data;
+				result.push(data);
 			}
 		}
 		return result;
@@ -64,7 +68,9 @@ var methods = {
 	 */
 	openAtNewWindow: function(id){
 		data = this.load();
-		data.shift(); //最初のデータを削除
+		console.log('first',data);
+
+//		data.shift(); //最初のデータを削除
 
 		chrome.windows.create({
 			url: data[0].url
@@ -144,20 +150,25 @@ var methods = {
 	getTabData: function(){
 		maxIndex = this.getMaxIndex();
 
+		function zeroPadding( val ) {
+			return ( "00" + val ).slice( -3 )
+		};
+
+
 		function saveFromTab(tabData){
 			var result;
 			if(tabData){
 				for(var i in tabData){
 					maxIndex++;
 					contents = {
-						site_id : maxIndex,
+						site_id : zeroPadding(maxIndex),
 						name : tabData[i].title,
 						url : tabData[i].url,
 						favicon : tabData[i].favicon
 					};
 
-					localStorage[ maxIndex ] = JSON.stringify( contents );
-					console.log(localStorage[ maxIndex ]);
+					localStorage[ zeroPadding(maxIndex) ] = JSON.stringify( contents );
+					console.log( localStorage[ maxIndex ]);
 				}
 			}
 		};
@@ -172,7 +183,7 @@ var methods = {
 						url: tabs[i].url,
 						favicon: tabs[i].favIconUrl,
 					};
-					tabDatas.push(data);
+					tabDatas[i] = data;
 				}
 			}
 			saveFromTab(tabDatas);

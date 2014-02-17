@@ -66,7 +66,7 @@
 			if(target.find('.issaved').text() == 'true'){
 				if(confirm('削除しますか？')){
 					id = target.find('.sid').text();
-					methods.del(id);
+					methods.del( methods.zeroPadding(parseInt(id)) );
 					$(this).parent('.data-set').remove();
 
 					popup('削除しました', 'success');
@@ -281,9 +281,9 @@
 				postCheck = false;
 			}else{
 				result = {
-					site_id: sidStr,
+					site_id: methods.zeroPadding( parseInt(sidStr) ),
 					contents : {
-						site_id : sidStr,
+						site_id : methods.zeroPadding( parseInt(sidStr) ),
 						name : nameStr,
 						url : urlStr,
 						favicon : favicon,

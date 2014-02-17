@@ -16,11 +16,8 @@ body {
 	position: relative;
 	width: 254px;
 	height: 160px;
-/*
-	border: solid 2px #dddddd;
-	background: #fafafa;
-*/
 }
+
 .generate {
 	position: absolute;
 	width: 140px;
