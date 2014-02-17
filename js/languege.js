@@ -12,9 +12,12 @@ var languege = {
 		add: "Add",
 		save: "Save",
 		openUrl: "Open URL",
+		useParam: "Use Login Param",
 
 		phSiteTitle: "Site Title",
 		phURL: "http://",
+		phName: "name",
+		phValue: "value",
 		button: "normal",
 	},
 
@@ -30,9 +33,12 @@ var languege = {
 		add: "追加",
 		save: "保存",
 		openUrl: "URLを開く",
+		useParam: "ログイン機能を使う",
 
 		phSiteTitle: "サイト名",
 		phURL: "http://",
+		phName: "名前",
+		phValue: "値",
 		button: "normal",
 	},
 
@@ -48,27 +54,33 @@ var languege = {
 		add: "出現せよ",
 		save: "刻印",
 		openUrl: "召喚",
+		useParam: "古代呪文の詠唱",
 
 		phSiteTitle: "賜りし二つ名",
 		phURL: "http://",
+		phName: "名",
+		phValue: "ステータス",
 		button: "magic",
 	},
 
 	cogo: {
 		key: "cogo",
 		name: "江戸",
-		title: "いと使われし頁を保管いたす",
+		title: "いと使われし頁を保管ゐたす",
 		setting: "設け定める",
 		saveAll: "すべてを記し候",
 		openAll: "すべてを開き候",
 		saveTabs: "よろずに集めたりて記しけり",
 		reset: "消さんとや",
-		add: "＊＊＊",
+		add: "加ふ",
 		save: "記しや",
 		openUrl: "開きや",
+		useParam: "通行手形を渡したし",
 
 		phSiteTitle: "御名",
-		phURL: "えいちてぃーてぃーぴー",
+		phURL: "ゑいちてーてーぴー",
+		phName: "名前",
+		phValue: "値",
 		button: "kanji",
 	},
 }

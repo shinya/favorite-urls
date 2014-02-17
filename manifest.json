@@ -14,22 +14,17 @@
 		"64"  : "icon/size64.png",
 		"128" : "icon/size128.png"
 	}
-*/
-/*
+ */
 	"background" : {
 		"page": "background.html"
 	},
 	"content_scripts" : [{
 
-		"matches" : [
-		             "https://local.general.manage/sales/voice"
-		],
-		"js": ["js/jquery-1.9.1.min.js", "js/speech.js"],
-		"css": ["css/bootstrap.min.css"],
+		"matches" : ["https://*/*", "http://*/*"],
+		"js": ["js/jquery-1.9.1.min.js", "js/main.js", "js/content.js"],
+//		"css": ["css/bootstrap.min.css"],
 		"run_at": "document_end"
-
 	}],
- */
 //	"permissions" : ["http://*/*", "https://*/*"]
 	"permissions" : ["tabs"]
 }

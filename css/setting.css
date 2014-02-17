@@ -73,6 +73,20 @@ body {
 	padding-bottom: 10px;
 }
 
+.buddy {
+	position: relative;
+	width: 100%;
+}
+.security {
+	position: absolute;
+	top: 5px;
+	right: 0px;
+/*
+	position: relative;
+	display: inline;
+*/
+}
+
 .sid {
 	margin: 4px 0px;
 }

@@ -18,8 +18,11 @@
 		$('.saving').text(lang.save);
 		$('.openurl').text(lang.openUrl);
 
+		$('.cbtext').text(lang.useParam);
 		$('[name=name]').attr('placeholder', lang.phSiteTitle);
 		$('[name=url]').attr('placeholder', lang.phURL);
+		$('[name=ele-name]').attr('placeholder', lang.phName);
+		$('[name=ele-value]').attr('placeholder', lang.phValue);
 
 		gen = $('.generate').attr('id',lang.button).detach();
 		$('.add-data-set').append(gen);
@@ -187,9 +190,20 @@
 			$(this).parent('.buddy').remove();
 		});
 
+		buddy.find('.security').click(function(){
+			var val = buddy.find('[name=ele-value]');
+			var type = val.attr('type');
+			if(type == "password"){
+				val.attr('type', 'text');
+			}else{
+				val.attr('type', 'password');
+			}
+		});
+
 		if(data){
 			buddy.find('[name=ele-name]').val(data.name);
 			buddy.find('[name=ele-value]').val(data.value);
+			buddy.find('[name=ele-value]').attr('type', data.type);
 		}
 		target.append(buddy);
 	}
@@ -258,10 +272,12 @@
 				var buddydata;
 				var name = $(this).find('[name=ele-name]').val();
 				var value = $(this).find('[name=ele-value]').val();
+				var type = $(this).find('[name=ele-value]').attr('type');
 				if(name && value){
 					buddydata = {
 						name: name,
 						value: value,
+						type: type,
 					};
 					postdata.push(buddydata);
 				}else{
