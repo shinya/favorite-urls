@@ -1,18 +1,13 @@
 (function(){
 
 	var seq = 1;
+	var lang;
 
 	/**
 	 * 保存されている言語設定を読み込んで反映する
 	 */
 	function loadLanguege(){
-		var lang;
 		lang = methods.getLanguege();
-		if(!lang){
-			lang = languege.japanese;
-		}else{
-			lang = languege[lang];
-		}
 
 		$('.title').text(lang.title);
 		$('#save').text(lang.saveAll);
@@ -22,6 +17,9 @@
 		$('.add').text(lang.add);
 		$('.saving').text(lang.save);
 		$('.openurl').text(lang.openUrl);
+
+		$('[name=name]').attr('placeholder', lang.phSiteTitle);
+		$('[name=url]').attr('placeholder', lang.phURL);
 	}
 
 	/**
@@ -30,23 +28,24 @@
 	function initlanguege(){
 		loadLanguege();
 
-		// セレクトボックスの設定
+		// セレクトボックスのデータ読込
 		var selects = $('.lang-select');
 		for(var i in languege){
 			selects.append(
 				$('<option></option>').text(languege[i].name).val(i)
 			);
 		}
-		lang = methods.getLanguege();
-		if(lang){
-			selects.val(lang);
-		}
 
+		// 現在選択されている言語をセレクトボックスに設定
+		selects.val( methods.getLanguege()['key'] );
+
+		// 言語変更時に読込直す処理
 		selects.change(function(){
 			methods.setLanguege($(this).val());
 			loadLanguege();
 		});
 
+		// チェックを入れると設定が現れる
 		$('[name=lang-setting]').click(function(){
 			if($(this).is(':checked')){
 				selects.show(300);
@@ -374,12 +373,29 @@
 		},2000);
 	}
 
+	/**
+	 * クリア処理を登録
+	 */
+	function addClear(){
+		$('#clear').click(function(){
+			if(confirm('全データを削除しますか？')){
+				if(confirm('ほんとに削除しますか？元に戻せないですよ？')){
+					if(confirm('後悔しませんね？')){
+						methods.clear();
+						location.reload();
+					}
+				}
+			}
+		});
+	}
 
 	/**
 	 * メイン処理開始
 	 */
 	console.log("start:");
 	$(document).ready(function(){
+		addClear();
+
 		//言語設定
 		initlanguege()
 
@@ -399,19 +415,6 @@
 		// 生成処理の登録
 		$('#generate').click(function(){
 			generate();
-		});
-
-
-		// クリア処理
-		$('#clear').click(function(){
-			if(confirm('全データを削除しますか？')){
-				if(confirm('ほんとに削除しますか？元に戻せないですよ？')){
-					if(confirm('後悔しませんね？')){
-						methods.clear();
-						location.reload();
-					}
-				}
-			}
 		});
 
 		//　タブ情報保存

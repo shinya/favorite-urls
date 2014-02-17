@@ -112,7 +112,6 @@ var methods = {
 			//minify function
 			fakePostCode = fakePost.toString().replace(/(\n|\t)/gm,'');
 
-			alert(result.url);
 			chrome.tabs.create({
 				selected: true,
 				url : "javascript:"+fakePostCode+"; fakePost('" + result.url + "', '" + JSON.stringify(result.postdata) + "');"
@@ -199,7 +198,13 @@ var methods = {
 	 */
 	getLanguege: function(){
 		lang = localStorage["lang"];
-		console.log(lang);
+		if(!lang){
+			lang = languege.japanese;
+			localStorage["lang"] = "japanese";
+			console.log("languege init.");
+		}else{
+			lang = languege[lang];
+		}
 		return lang;
 	},
 

@@ -1,4 +1,19 @@
 (function(){
+
+	/**
+	 * 保存されている言語設定を読み込んで反映する
+	 */
+	function loadLanguege(){
+		var lang;
+		lang = methods.getLanguege();
+
+		$('.title').text(lang.title);
+		$('#open').text(lang.openAll);
+		$('#get').text(lang.saveTabs);
+		$('#action').text(lang.setting);
+	}
+
+
 	$(document).ready(function(){
 		$('#action').click(function(){
 			var url = $(this).attr('url');
@@ -53,6 +68,8 @@
 			return false;
 		});
 
+		// 言語設定を読み込む
+		loadLanguege()
 
 	});
 
