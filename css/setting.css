@@ -21,7 +21,7 @@ body {
 	background: #fafafa;
 */
 }
-#generate {
+.generate {
 	position: absolute;
 	width: 140px;
 	height: 140px;
@@ -31,9 +31,26 @@ body {
 	margin-top: -70px;
 	text-align: center;
 	cursor: pointer;
+}
+
+#normal {
 	background: url("../img/plus.png") no-repeat;
 }
 
+#magic {
+	background: url("../img/magic_circuit_s.png") no-repeat;
+}
+
+#kanji {
+	background: url("../img/kuwaeru.png") no-repeat;
+}
+
+.lang {
+	position:absolute;
+	padding: 4px;
+	top: 0px;
+	right: 0px;
+}
 
 .close {
 	display: block;

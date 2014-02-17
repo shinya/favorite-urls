@@ -20,6 +20,9 @@
 
 		$('[name=name]').attr('placeholder', lang.phSiteTitle);
 		$('[name=url]').attr('placeholder', lang.phURL);
+
+		gen = $('.generate').attr('id',lang.button).detach();
+		$('.add-data-set').append(gen);
 	}
 
 	/**
@@ -413,7 +416,7 @@
 		});
 
 		// 生成処理の登録
-		$('#generate').click(function(){
+		$('.generate').click(function(){
 			generate();
 		});
 

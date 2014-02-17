@@ -7,7 +7,7 @@ var languege = {
 		setting: "Setting",
 		saveAll: "Save All",
 		openAll: "Open All URL",
-		saveTabs: "Save Tab's URL",
+		saveTabs: "Save Opened Tab's URL",
 		reset: "Reset",
 		add: "Add",
 		save: "Save",
@@ -15,7 +15,7 @@ var languege = {
 
 		phSiteTitle: "Site Title",
 		phURL: "http://",
-		imgPath: "img/plus.png",
+		button: "normal",
 	},
 
 	japanese: {
@@ -30,9 +30,10 @@ var languege = {
 		add: "追加",
 		save: "保存",
 		openUrl: "URLを開く",
+
 		phSiteTitle: "サイト名",
 		phURL: "http://",
-		imgPath: "img/plus.png",
+		button: "normal",
 	},
 
 	cyu2: {
@@ -47,27 +48,28 @@ var languege = {
 		add: "出現せよ",
 		save: "刻印",
 		openUrl: "召喚",
+
 		phSiteTitle: "賜りし二つ名",
 		phURL: "http://",
-		imgPath: "img/plus.png",
+		button: "magic",
 	},
 
 	cogo: {
 		key: "cogo",
-		name: "古語",
-		title: "かしこし使われしゆーあーるえるを保管いたす",
-		setting: "からくり",
-		saveAll: "すべてを仕舞い候",
+		name: "江戸",
+		title: "いと使われし頁を保管いたす",
+		setting: "設け定める",
+		saveAll: "すべてを記し候",
 		openAll: "すべてを開き候",
-		saveTabs: "集めたりて仕舞いや",
-		reset: "けさんとや",
+		saveTabs: "よろずに集めたりて記しけり",
+		reset: "消さんとや",
 		add: "＊＊＊",
-		save: "くはふ",
-		openUrl: "ひらきて",
+		save: "記しや",
+		openUrl: "開きや",
+
 		phSiteTitle: "御名",
 		phURL: "えいちてぃーてぃーぴー",
-		imgPath: "img/plus.png",
+		button: "kanji",
 	},
-
 }
 
