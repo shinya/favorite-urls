@@ -88,11 +88,12 @@ body {
 .buddy {
 	position: relative;
 	width: 100%;
+	margin-left: 0!important;
 }
 .security {
 	position: absolute;
 	top: 5px;
-	right: 0px;
+	right: -14px;
 	cursor: pointer;
 /*
 	position: relative;
