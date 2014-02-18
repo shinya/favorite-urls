@@ -1,4 +1,4 @@
-var languege = {
+var language = {
 
 	defaults : {
 		key: "defaults",

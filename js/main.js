@@ -207,14 +207,14 @@ var methods = {
 	/**
 	 * 言語設定を取得する
 	 */
-	getLanguege: function(){
+	getLanguage: function(){
 		lang = localStorage["lang"];
 		if(!lang){
-			lang = languege.japanese;
+			lang = language.japanese;
 			localStorage["lang"] = "japanese";
-			console.log("languege init.");
+			console.log("language init.");
 		}else{
-			lang = languege[lang];
+			lang = language[lang];
 		}
 		return lang;
 	},
@@ -222,7 +222,7 @@ var methods = {
 	/**
 	 * 言語設定を保存する
 	 */
-	setLanguege: function(lang){
+	setLanguage: function(lang){
 		localStorage["lang"] = lang;
 	}
 

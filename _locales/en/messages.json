@@ -1,0 +1,14 @@
+{
+	"extName":{
+		"message" : "Frequent Access",
+		"description" : "Extension Name"
+	},
+	"description": {
+		"message" : "URL that are often used can be a favorite? No, let's summarized in this tool.",
+		"description" : "A description of this extension."
+	},
+	"languageSetting": {
+		"message": "Language Setting",
+		"description": "This is the wording of the switching display language"
+	}
+}

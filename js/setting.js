@@ -6,8 +6,11 @@
 	/**
 	 * 保存されている言語設定を読み込んで反映する
 	 */
-	function loadLanguege(){
-		lang = methods.getLanguege();
+	function loadLanguage(){
+		lang = methods.getLanguage();
+
+		// extensionの設定から文言を取得する
+		$('#language').text( chrome.i18n.getMessage("languageSetting") );
 
 		$('title').text(lang.setting);
 		$('.title').text(lang.title);
@@ -41,24 +44,24 @@
 	/**
 	 * 言語設定
 	 */
-	function initlanguege(){
-		loadLanguege();
+	function initlanguage(){
+		loadLanguage();
 
 		// セレクトボックスのデータ読込
 		var selects = $('.lang-select');
-		for(var i in languege){
+		for(var i in language){
 			selects.append(
-				$('<option></option>').text(languege[i].name).val(i)
+				$('<option></option>').text(language[i].name).val(i)
 			);
 		}
 
 		// 現在選択されている言語をセレクトボックスに設定
-		selects.val( methods.getLanguege()['key'] );
+		selects.val( methods.getLanguage()['key'] );
 
 		// 言語変更時に読込直す処理
 		selects.change(function(){
-			methods.setLanguege($(this).val());
-			loadLanguege();
+			methods.setLanguage($(this).val());
+			loadLanguage();
 		});
 
 		// チェックを入れると設定が現れる
@@ -429,7 +432,7 @@
 	console.log("start:");
 	$(document).ready(function(){
 		//言語設定
-		initlanguege()
+		initlanguage()
 
 		addClear();
 

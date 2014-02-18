@@ -3,9 +3,9 @@
 	/**
 	 * 保存されている言語設定を読み込んで反映する
 	 */
-	function loadLanguege(){
+	function loadLanguage(){
 		var lang;
-		lang = methods.getLanguege();
+		lang = methods.getLanguage();
 
 		$('.title').text(lang.title);
 		$('#open').text(lang.openAll);
@@ -80,7 +80,7 @@
 
 
 		// 言語設定を読み込む
-		loadLanguege()
+		loadLanguage()
 
 	});
 
