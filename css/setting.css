@@ -81,6 +81,7 @@ body {
 	position: absolute;
 	top: 5px;
 	right: 0px;
+	cursor: pointer;
 /*
 	position: relative;
 	display: inline;

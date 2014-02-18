@@ -26,10 +26,27 @@
 			);
 		});
 
+		// 全てを開く
 		$('#open').click(function(){
-			methods.openAtNewWindow();
+			chrome.extension.sendRequest({
+				"action": "openTab"
+			}, function(response) {
+				console.log(response);
+			});
 		});
 
+		// タブデータの保存
+		$('#get').click(function(){
+			chrome.extension.sendRequest({
+				"action": "getTabURL"
+			}, function(response) {
+				console.log(response);
+				window.close();
+			});
+
+//			methods.getTabData();
+//			return false;
+		});
 
 		result = methods.load();
 
@@ -61,12 +78,6 @@
 			});
 		});
 
-		// タブデータの保存
-		$('#get').click(function(){
-			methods.getTabData();
-			window.close();
-			return false;
-		});
 
 		// 言語設定を読み込む
 		loadLanguege()

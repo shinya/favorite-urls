@@ -185,7 +185,7 @@
 	 */
 	function addBuddy(target, data){
 		var buddy = $('.buddy-model').clone();
-		buddy.removeClass('hide buddy-model').show();
+		buddy.removeClass('hide buddy-model').hide();
 		buddy.find('.remove').click(function(){
 			$(this).parent('.buddy').remove();
 		});
@@ -195,8 +195,10 @@
 			var type = val.attr('type');
 			if(type == "password"){
 				val.attr('type', 'text');
+				$(this).find('i').addClass('icon-eye-open').removeClass('icon-eye-close');
 			}else{
 				val.attr('type', 'password');
+				$(this).find('i').addClass('icon-eye-close').removeClass('icon-eye-open');
 			}
 		});
 
@@ -204,8 +206,19 @@
 			buddy.find('[name=ele-name]').val(data.name);
 			buddy.find('[name=ele-value]').val(data.value);
 			buddy.find('[name=ele-value]').attr('type', data.type);
+
+			var val = buddy.find('[name=ele-value]');
+			var type = val.attr('type');
+			if(type == "password"){
+				val.attr('type', 'password');
+				buddy.find('.security').find('i').addClass('icon-eye-close').removeClass('icon-eye-open');
+			}else{
+				val.attr('type', 'text');
+				buddy.find('.security').find('i').addClass('icon-eye-open').removeClass('icon-eye-close');
+			}
 		}
 		target.append(buddy);
+		buddy.show(200);
 	}
 
 
@@ -217,7 +230,6 @@
 		for(var i in result){
 			generate(result[i]);
 		}
-
 	}
 
 	/**
@@ -338,7 +350,6 @@
 				msg: msg,
 			}
 		}
-
 	}
 
 
@@ -369,7 +380,6 @@
 		}else{
 			popup(msg, 'danger');
 		}
-
 	}
 
 	/**
