@@ -20,10 +20,7 @@
 	"content_scripts" : [{
 		"matches" : ["https://*/*", "http://*/*"],
 		"js": ["js/jquery-1.9.1.min.js", "js/main.js", "js/content.js"],
-//		"css": ["css/bootstrap.min.css"],
 		"run_at": "document_end"
 	}],
-//	"permissions" : ["http://*/*", "https://*/*"]
 	"permissions" : ["tabs"]
 }
-
