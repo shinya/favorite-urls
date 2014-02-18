@@ -19,6 +19,15 @@ var languege = {
 		phName: "name",
 		phValue: "value",
 		button: "normal",
+
+		msgClearConfirm: "Are you sure you want to delete the URL data of all? \nYou can not undo this operation.",
+		msgSaveTabData: "Are you sure you want to save the URL of the data tab of all of the currently open?",
+		msgDeleteConfirm: "Are you sure you want to delete?",
+		msgDeleted: "Has been deleted.",
+		msgSaved: "Saved.",
+		msgIncorrectLogin: "Login data has not been entered correctly.",
+		msgIncorrectUrl: "Is not in the correct format of the URL.",
+		msgIncorrectData: "Data has not been entered correctly.",
 	},
 
 	japanese: {
@@ -28,7 +37,7 @@ var languege = {
 		setting: "設定",
 		saveAll: "一括保存",
 		openAll: "全てのURLを開く",
-		saveTabs: "現在開いているタブのURLを保存する",
+		saveTabs: "現在のタブのURLを保存する",
 		reset: "全削除",
 		add: "追加",
 		save: "保存",
@@ -40,6 +49,15 @@ var languege = {
 		phName: "名前",
 		phValue: "値",
 		button: "normal",
+
+		msgClearConfirm: "全てのURLデータを削除しますか？この操作は元に戻せません",
+		msgSaveTabData: "現在開いているタブのURLデータを保存しますか？",
+		msgDeleteConfirm: "削除しますか？",
+		msgDeleted: "削除しました",
+		msgSaved: "保存しました",
+		msgIncorrectLogin: "ログインデータが正しく入力されていません",
+		msgIncorrectUrl: "URLの形式が正しくありません",
+		msgIncorrectData: "情報が正しく入力されていません",
 	},
 
 	cyu2: {
@@ -49,7 +67,7 @@ var languege = {
 		setting: "魔法書",
 		saveAll: "聖遺物創造",
 		openAll: "閉ざされし魔界の扉を開かん",
-		saveTabs: "魔瘴収束",
+		saveTabs: "魔瘴吸収",
 		reset: "忘却の闇",
 		add: "出現せよ",
 		save: "刻印",
@@ -61,6 +79,15 @@ var languege = {
 		phName: "名",
 		phValue: "ステータス",
 		button: "magic",
+
+		msgClearConfirm: "汝、蓄積せし魔術を忘却へと誘うか！",
+		msgSaveTabData: "漂いし魔瘴を吸収し、汝の糧と為すか！",
+		msgDeleteConfirm: "汝、闇の彼方へ追放するか！",
+		msgDeleted: "追放完了",
+		msgSaved: "刻印完了",
+		msgIncorrectLogin: "古代呪文書をもう一度見直してみたまえ",
+		msgIncorrectUrl: "召喚呪文が間違っているだと・・・！",
+		msgIncorrectData: "私としたことが・・・どうやら刻印に失敗したようだ。",
 	},
 
 	cogo: {
@@ -71,7 +98,7 @@ var languege = {
 		saveAll: "すべてを記し候",
 		openAll: "すべてを開き候",
 		saveTabs: "よろずに集めたりて記しけり",
-		reset: "消さんとや",
+		reset: "よろずを消さんとや",
 		add: "加ふ",
 		save: "記しや",
 		openUrl: "開きや",
@@ -82,6 +109,15 @@ var languege = {
 		phName: "名前",
 		phValue: "値",
 		button: "kanji",
+
+		msgClearConfirm: "元に戻せざるが、貯めし「ゆーあーるえる」を消すや？",
+		msgSaveTabData: "よろずの知識を集めたりて、手記と致すや？",
+		msgDeleteConfirm: "消すや？",
+		msgDeleted: "消しき。",
+		msgSaved: "記したり",
+		msgIncorrectLogin: "この通行手形は正しくなし",
+		msgIncorrectUrl: "ゆーあーるえるに僻事ありき",
+		msgIncorrectData: "記し情報、欠けたり",
 	},
 }
 

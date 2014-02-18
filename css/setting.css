@@ -5,7 +5,12 @@ body {
 	padding: 0;
 }
 .main {
+	padding-left: 20px;
 	padding-bottom: 20px;
+}
+
+.list {
+	width: 100%;
 }
 
 .data-set {
@@ -44,9 +49,16 @@ body {
 
 .lang {
 	position:absolute;
+	width: 10%;
+	text-align: right;
 	padding: 4px;
 	top: 0px;
 	right: 0px;
+}
+
+.lang-select {
+	position: relative;
+	width: 100%;
 }
 
 .close {

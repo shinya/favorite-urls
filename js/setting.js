@@ -9,6 +9,7 @@
 	function loadLanguege(){
 		lang = methods.getLanguege();
 
+		$('title').text(lang.title);
 		$('.title').text(lang.title);
 		$('#save').text(lang.saveAll);
 		$('#read').text(lang.openAll);
@@ -23,6 +24,15 @@
 		$('[name=url]').attr('placeholder', lang.phURL);
 		$('[name=ele-name]').attr('placeholder', lang.phName);
 		$('[name=ele-value]').attr('placeholder', lang.phValue);
+
+		$('#msg-clear-confirm').text(lang.msgClearConfirm);
+		$('#msg-save-tabdata').text(lang.msgSaveTabData);
+		$('#msg-delete-confirm').text(lang.msgDeleteConfirm);
+		$('#msg-deleted').text(lang.msgDeleted);
+		$('#msg-saved').text(lang.msgSaved);
+		$('#msg-incorrect-login').text(lang.msgIncorrectLogin);
+		$('#msg-incorrect-url').text(lang.msgIncorrectUrl);
+		$('#msg-incorrect-data').text(lang.msgIncorrectData);
 
 		gen = $('.generate').attr('id',lang.button).detach();
 		$('.add-data-set').append(gen);
@@ -67,12 +77,12 @@
 	function closing(target){
 		target.children('.close').click(function(){
 			if(target.find('.issaved').text() == 'true'){
-				if(confirm('削除しますか？')){
+				if(confirm( $('#msg-delete-confirm').text() )){
 					id = target.find('.sid').text();
 					methods.del( methods.zeroPadding(parseInt(id)) );
 					$(this).parent('.data-set').remove();
 
-					popup('削除しました', 'success');
+					popup($('#msg-deleted').text(), 'success');
 				}
 			}else{
 				// 一度も保存されていなければそのまま削除
@@ -293,9 +303,8 @@
 					};
 					postdata.push(buddydata);
 				}else{
-					msg += "ログインデータが不正です。<br>";
+					msg += $('#msg-incorrect-login').text() + "<br>";
 					postCheck = false;
-					error++;
 				}
 			});
 
@@ -305,7 +314,7 @@
 
 		if(sidStr && nameStr && urlStr && postCheck){
 			if(!isUrl){
-				msg += "URLの形式が正しくありません。<br>";
+				msg += $('#msg-incorrect-url').text() + "<br>";
 				postCheck = false;
 			}else{
 				result = {
@@ -321,7 +330,7 @@
 			}
 		}else{
 			if(postCheck){
-				msg += "情報が正しく入力されていません。<br>";
+				msg += $('#msg-incorrect-data').text() + "<br>";
 				postCheck = false;
 			}
 		}
@@ -335,7 +344,7 @@
 				// 個別保存の場合。保存して終了
 				methods.saveData(result);
 				console.log(result);
-				popup('保存しました', 'success');
+				popup( $('#msg-saved').text() , 'success');
 				return;
 			}else{
 				// 一括保存の場合。データを返すだけ
@@ -376,7 +385,7 @@
 		// データが正しければ保存を行う
 		if(saveData.length > 0 && error == 0){
 			jsonSave( saveData );
-			popup('保存しました', 'success');
+			popup( $('#msg-saved').text() , 'success');
 		}else{
 			popup(msg, 'danger');
 		}
@@ -407,13 +416,9 @@
 	 */
 	function addClear(){
 		$('#clear').click(function(){
-			if(confirm('全データを削除しますか？')){
-				if(confirm('ほんとに削除しますか？元に戻せないですよ？')){
-					if(confirm('後悔しませんね？')){
-						methods.clear();
-						location.reload();
-					}
-				}
+			if(confirm( $('#msg-clear-confirm').text() )){
+				methods.clear();
+				location.reload();
 			}
 		});
 	}
@@ -423,10 +428,10 @@
 	 */
 	console.log("start:");
 	$(document).ready(function(){
-		addClear();
-
 		//言語設定
 		initlanguege()
+
+		addClear();
 
 		// 保存されているデータを読み込む
 		initLoad();
@@ -448,7 +453,7 @@
 
 		//　タブ情報保存
 		$('#get').click(function(){
-			if(confirm('開いているタブのデータを保存しますか？')){
+			if(confirm( $('#msg-save-tabdata').text() )){
 				methods.getTabData();
 				setTimeout(function(){
 					location.reload();
