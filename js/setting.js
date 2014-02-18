@@ -9,7 +9,7 @@
 	function loadLanguege(){
 		lang = methods.getLanguege();
 
-		$('title').text(lang.title);
+		$('title').text(lang.setting);
 		$('.title').text(lang.title);
 		$('#save').text(lang.saveAll);
 		$('#read').text(lang.openAll);

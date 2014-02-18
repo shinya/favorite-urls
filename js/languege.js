@@ -33,7 +33,7 @@ var languege = {
 	japanese: {
 		key: "japanese",
 		name: "日本語",
-		title: "よく使うURLまとめ",
+		title: "URLまとめてみました",
 		setting: "設定",
 		saveAll: "一括保存",
 		openAll: "全てのURLを開く",
@@ -50,7 +50,7 @@ var languege = {
 		phValue: "値",
 		button: "normal",
 
-		msgClearConfirm: "全てのURLデータを削除しますか？この操作は元に戻せません",
+		msgClearConfirm: "全てのURLデータを削除しますか？\nこの操作は元に戻せません",
 		msgSaveTabData: "現在開いているタブのURLデータを保存しますか？",
 		msgDeleteConfirm: "削除しますか？",
 		msgDeleted: "削除しました",
