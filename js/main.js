@@ -210,8 +210,8 @@ var methods = {
 	getLanguage: function(){
 		lang = localStorage["lang"];
 		if(!lang){
-			lang = language.japanese;
-			localStorage["lang"] = "japanese";
+			lang = language[chrome.i18n.getMessage("defaultLang")];
+			localStorage["lang"] = chrome.i18n.getMessage("defaultLang");
 			console.log("language init.");
 		}else{
 			lang = language[lang];

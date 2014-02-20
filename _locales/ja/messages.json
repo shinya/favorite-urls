@@ -7,6 +7,10 @@
 		"message" : "よくつかうURLはお気に入り？いいえ、このツールにまとめましょう。",
 		"description" : "この拡張機能の説明です"
 	},
+	"defaultLang": {
+		"message": "japanese",
+		"description": "標準の言語設定名です"
+	},
 	"languageSetting": {
 		"message": "言語設定",
 		"description": "言語切替表示用の文言です"
