@@ -19,13 +19,23 @@
 				if(target.postdata){
 					console.log('same!');
 					for(var i in target.postdata){
-						var input = $('[name="'+ target.postdata[i].name +'"]');
-						if(input.size() > 0 ){
-							input.val(target.postdata[i].value);
-							console.log(i, target.postdata[i])
+						// アクション属性があった場合、POST先を変更する
+						if(target.postdata[i].name == 'action'){
+							$('form').attr('action', target.postdata[i].value);
+							console.log('action!');
+							continue;
 						}else{
-							return ;
+							var input = $('[name="'+ target.postdata[i].name +'"]');
+
+							if(input.size() > 0 ){
+								input.val(target.postdata[i].value);
+								console.log(i, target.postdata[i])
+							}else{
+								return ;
+							}
+
 						}
+
 					}
 
 					$('form').submit();

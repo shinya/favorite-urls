@@ -1,18 +1,18 @@
 {
 	"manifest_version": 2,
 	"name" : "__MSG_extName__",
-	"version" : "1.0.1",
+	"version" : "1.0.2",
 	"default_locale" : "ja",
 	"description" : "__MSG_description__",
 	"browser_action" : {
-		"default_icon" : "icon/24_w.png",
+		"default_icon" : "icon/book_24.png",
 		"default_title" : "__MSG_extName__",
 		"default_popup" : "popup.html"
 	},
 	"icons": {
-		"48"  : "icon/48.png",
-		"64"  : "icon/64.png",
-		"128" : "icon/128.png"
+		"48"  : "icon/book_48.png",
+		"64"  : "icon/book_64.png",
+		"128" : "icon/book_128.png"
 	},
 	"background" : {
 		"page": "background.html"
