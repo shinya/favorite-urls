@@ -191,6 +191,10 @@
 		// 表示する
 		gen.show(300);
 
+		$('.list .data-set').last().after(
+				$('.add-data-set')
+		);
+
 	}
 
 	/**
@@ -240,6 +244,21 @@
 	 */
 	function initLoad(){
 		result = methods.load();
+
+		result.sort(
+			function(a, b){
+				var l = parseInt(a.seqno);
+				var r = parseInt(b.seqno);
+				if(l < r){
+					return -1;
+				}else if(l > r){
+					return 1;
+				}else{
+					return 0;
+				}
+			}
+		);
+
 		for(var i in result){
 			generate(result[i]);
 		}
@@ -273,6 +292,7 @@
 		var name = target.find('[name=name]');
 		var url = target.find('[name=url]');
 		var favicon = target.find('[name=favicon]').val();
+		var seqNo = sid.attr('seq');
 
 		var postdata = new Array();
 		var postCheck = true;
@@ -324,6 +344,8 @@
 					site_id: methods.zeroPadding( parseInt(sidStr) ),
 					contents : {
 						site_id : methods.zeroPadding( parseInt(sidStr) ),
+//						seqno: methods.zeroPadding( parseInt(seqNo) ),
+						seqno: parseInt(seqNo),
 						name : nameStr,
 						url : urlStr,
 						favicon : favicon,
@@ -426,8 +448,18 @@
 		});
 	}
 
+	function renumber(){
+		var seqNo = 1;
+		$('.data-set').not('.model').each(function(){
+			$(this).find('.sid').attr('seq', seqNo);
+			seqNo++;
+		});
+	}
+
 	/**
-	 * メイン処理開始
+	 * ============================
+	 *   メイン処理開始
+	 * ============================
 	 */
 	console.log("start:");
 	$(document).ready(function(){
@@ -452,6 +484,7 @@
 		// 生成処理の登録
 		$('.generate').click(function(){
 			generate();
+			renumber();
 		});
 
 		//　タブ情報保存
@@ -461,6 +494,14 @@
 				setTimeout(function(){
 					location.reload();
 				},200);
+			}
+		});
+
+		$('.list').sortable({
+			containment: 'parent',
+			connectWith: '.data-set',
+			update: function(){
+				renumber();
 			}
 		});
 

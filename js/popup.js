@@ -49,6 +49,20 @@
 		});
 
 		result = methods.load();
+		result.sort(
+				function(a, b){
+					var l = parseInt(a.seqno);
+					var r = parseInt(b.seqno);
+					if(l < r){
+						return -1;
+					}else if(l > r){
+						return 1;
+					}else{
+						return 0;
+					}
+				}
+		);
+
 
 		for(var i in result){
 			var link = $('.model').clone();

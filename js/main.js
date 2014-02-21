@@ -162,6 +162,7 @@ var methods = {
 					maxIndex++;
 					contents = {
 						site_id : zeroPadding(maxIndex),
+						seqno : maxIndex,
 						name : tabData[i].title,
 						url : tabData[i].url,
 						favicon : tabData[i].favicon

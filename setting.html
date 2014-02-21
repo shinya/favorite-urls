@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="css/setting.css">
 
 	<script src="js/jquery-1.9.1.min.js"></script>
+	<script src="js/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/language.js"></script>
 	<script src="js/main.js"></script>
@@ -37,10 +38,11 @@
 		<button id="clear" class="btn btn-danger">Reset</button><br>
 	</div>
 
-	<div class="list"></div>
-	<div class="add-data-set span3">
-		<div class="generate">
-		&nbsp;
+	<div class="list row">
+		<div class="add-data-set span3">
+			<div class="generate">
+			&nbsp;
+			</div>
 		</div>
 	</div>
 
@@ -49,7 +51,7 @@
 	<div class="well data-set span3 model hide">
 		<div class="close">&times;</div>
 		<div class="row-fluid">
-			<div class="label label-info sid hide"></div>
+			<div class="label label-info sid hide" seq=""></div>
 			<input class="row-fluid" name="name" type="text" value="" placeholder="Site Name" />
 			<input class="row-fluid" name="url" type="text" value="" placeholder="http://" />
 			<input type="hidden" name="favicon" value="" />
