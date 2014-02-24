@@ -120,7 +120,7 @@
 	/**
 	 * ボックスの生成
 	 */
-	function generate(data){
+	function generate(data, clicked){
 		var gen = $('.model').clone();
 		gen.removeClass('hide model').hide();
 		$('.list').append(gen);
@@ -191,9 +191,13 @@
 		// 表示する
 		gen.show(300);
 
-		$('.list .data-set').last().after(
-				$('.add-data-set')
-		);
+		// クリックされて追加された場合（ユーザーが画面から追加する場合）
+		if(clicked){
+			// 追加ボタンの位置調整（最後に持ってくる）
+			clicked.parent('.list').children('.data-set').last().after(
+					clicked
+			);
+		}
 
 	}
 
@@ -293,6 +297,11 @@
 		var url = target.find('[name=url]');
 		var favicon = target.find('[name=favicon]').val();
 		var seqNo = sid.attr('seq');
+		var group = sid.attr('group');
+
+		if(!group){
+			group = 1;
+		}
 
 		var postdata = new Array();
 		var postCheck = true;
@@ -346,6 +355,7 @@
 						site_id : methods.zeroPadding( parseInt(sidStr) ),
 //						seqno: methods.zeroPadding( parseInt(seqNo) ),
 						seqno: parseInt(seqNo),
+						group: group,
 						name : nameStr,
 						url : urlStr,
 						favicon : favicon,
@@ -483,7 +493,7 @@
 
 		// 生成処理の登録
 		$('.generate').click(function(){
-			generate();
+			generate(undefined, $(this).parent('.add-data-set'));
 			renumber();
 		});
 

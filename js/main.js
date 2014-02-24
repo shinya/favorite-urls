@@ -149,6 +149,7 @@ var methods = {
 	 */
 	getTabData: function(){
 		maxIndex = this.getMaxIndex();
+		var group = 1;
 
 		function zeroPadding( val ) {
 			return ( "00" + val ).slice( -3 )
@@ -163,6 +164,7 @@ var methods = {
 					contents = {
 						site_id : zeroPadding(maxIndex),
 						seqno : maxIndex,
+						group: group,
 						name : tabData[i].title,
 						url : tabData[i].url,
 						favicon : tabData[i].favicon
