@@ -132,6 +132,7 @@
 			}
 			console.log(data);
 			gen.find('.sid').text(data.site_id);
+			gen.find('.sid').attr('seq', data.seqno);
 			gen.find('[name=name]').val(data.name);
 			gen.find('[name=url]').val(data.url);
 			gen.find('[name=favicon]').val(data.favicon);
@@ -266,6 +267,10 @@
 		for(var i in result){
 			generate(result[i]);
 		}
+
+		$('.list').children('.data-set').last().after(
+			$('.add-data-set')
+		);
 	}
 
 	/**
@@ -510,6 +515,7 @@
 		$('.list').sortable({
 			containment: 'parent',
 			connectWith: '.data-set',
+			cancel: '.generate',
 			update: function(){
 				renumber();
 			}
