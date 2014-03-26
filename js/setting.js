@@ -21,6 +21,8 @@
 		$('.add').text(lang.add);
 		$('.saving').text(lang.save);
 		$('.openurl').text(lang.openUrl);
+		$('#import').text(lang.importBtn);
+		$('#export').text(lang.exportBtn);
 
 		$('.cbtext').text(lang.useParam);
 		$('[name=name]').attr('placeholder', lang.phSiteTitle);
@@ -36,6 +38,7 @@
 		$('#msg-incorrect-login').text(lang.msgIncorrectLogin);
 		$('#msg-incorrect-url').text(lang.msgIncorrectUrl);
 		$('#msg-incorrect-data').text(lang.msgIncorrectData);
+		$('#msg-cannot-export').text(lang.msgCannotExport)
 
 		gen = $('.generate').attr('id',lang.button).detach();
 		$('.add-data-set').append(gen);
@@ -471,6 +474,42 @@
 		});
 	}
 
+	function importFile(){
+		var fr = new FileReader();
+		var target = $('#file-form');
+		data = target.prop('files')[0];
+
+		fr.onerror = function(){
+			alert("error!");
+		}
+		fr.onload = function(ev){
+			try{
+				json = JSON.parse(ev.target.result);
+				//console.log(json);
+				for(var i in json){
+					generate(json[i], $('.generate').parent('.add-data-set'));
+				}
+				target.val('');
+			}catch(e){
+				alert("file error");
+			}
+
+		}
+		// テキストの読込
+		fr.readAsText(data, "utf-8");
+	}
+
+	function exportFile(target){
+		var data = methods.load();
+		if(data.length < 1){
+			alert($('#msg-cannot-export').text());
+			return;
+		}
+		var text = JSON.stringify(data);
+		var contents = "data:application/octet-stream," + encodeURIComponent(text);
+		target.attr('href', contents);
+	}
+
 	/**
 	 * ============================
 	 *   メイン処理開始
@@ -504,21 +543,34 @@
 
 		//　タブ情報保存
 		$('#get').click(function(){
-			if(confirm( $('#msg-save-tabdata').text() )){
-				methods.getTabData();
-				setTimeout(function(){
-					location.reload();
-				},200);
-			}
+			methods.getTabData();
+			location.reload();
 		});
 
+		// 並び替えができるようにする
 		$('.list').sortable({
 			containment: 'parent',
 			connectWith: '.data-set',
-			cancel: '.generate',
+			cancel: '.generate,:input,buttton',
 			update: function(){
 				renumber();
 			}
+		});
+
+		// インポート処理のトリガー
+		$('#import').click(function(){
+			$('#file-form').click();
+		});
+
+		// ファイルからのインポート
+		$('#file-form').change(function(){
+			importFile();
+			renumber();
+		});
+
+		// ファイルへのエクスポート
+		$('#export').click(function(){
+			exportFile($(this));
 		});
 
 	});

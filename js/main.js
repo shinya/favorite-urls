@@ -171,7 +171,7 @@ var methods = {
 					};
 
 					localStorage[ zeroPadding(maxIndex) ] = JSON.stringify( contents );
-					console.log( localStorage[ maxIndex ]);
+					console.log( localStorage[ zeroPadding(maxIndex) ]);
 				}
 			}
 		};
@@ -191,6 +191,32 @@ var methods = {
 			}
 			saveFromTab(tabDatas);
 		});
+	},
+
+
+	/**
+	 * 現在開いてるタブの情報を取得する
+	 */
+	getTabDataInfo: function(){
+		chrome.tabs.getAllInWindow(null, function(tabs){
+			tabDatas = new Array();
+			for(var i in tabs){
+				var data;
+				if(tabs[i].url.indexOf("http", 0) == 0){
+					data = {
+						title: tabs[i].title,
+						url: tabs[i].url,
+						favicon: tabs[i].favIconUrl,
+					};
+					tabDatas[i] = data;
+				}
+			}
+//
+			for(var i in tabDatas){
+				console.log( tabDatas[i].title, tabDatas[i].url, tabDatas[i].favicon);
+			}
+		});
+
 	},
 
 	/**

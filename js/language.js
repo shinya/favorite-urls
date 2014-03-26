@@ -13,6 +13,8 @@ var language = {
 		save: "Save",
 		openUrl: "Open URL",
 		useParam: "Use Login Param",
+		importBtn: "Import",
+		exportBtn: "Export",
 
 		phSiteTitle: "Site Title",
 		phURL: "http://",
@@ -28,6 +30,7 @@ var language = {
 		msgIncorrectLogin: "Login data has not been entered correctly.",
 		msgIncorrectUrl: "Is not in the correct format of the URL.",
 		msgIncorrectData: "Data has not been entered correctly.",
+		msgCannotExport: "There is no data to be exported.",
 	},
 
 	japanese: {
@@ -43,6 +46,8 @@ var language = {
 		save: "保存",
 		openUrl: "URLを開く",
 		useParam: "ログイン機能を使う",
+		importBtn: "インポート",
+		exportBtn: "エクスポート",
 
 		phSiteTitle: "サイト名",
 		phURL: "http://",
@@ -58,6 +63,7 @@ var language = {
 		msgIncorrectLogin: "ログインデータが正しく入力されていません",
 		msgIncorrectUrl: "URLの形式が正しくありません",
 		msgIncorrectData: "情報が正しく入力されていません",
+		msgCannotExport: "出力対象のデータがありあせん",
 	},
 
 	cyu2: {
@@ -73,6 +79,8 @@ var language = {
 		save: "刻印",
 		openUrl: "召喚",
 		useParam: "古代呪文の詠唱",
+		importBtn: "吸血",
+		exportBtn: "具象化",
 
 		phSiteTitle: "賜りし二つ名",
 		phURL: "http://",
@@ -88,6 +96,7 @@ var language = {
 		msgIncorrectLogin: "古代呪文書をもう一度見直してみたまえ",
 		msgIncorrectUrl: "召喚呪文が間違っているだと・・・！",
 		msgIncorrectData: "私としたことが・・・どうやら刻印に失敗したようだ。",
+		msgCannotExport: "MPが・・・MPが足りない！",
 	},
 
 	cogo: {
@@ -103,6 +112,8 @@ var language = {
 		save: "記しや",
 		openUrl: "開きや",
 		useParam: "通行手形を渡したし",
+		importBtn: "読み込まれたし",
+		exportBtn: "出力致し候",
 
 		phSiteTitle: "御名",
 		phURL: "ゑいちてーてーぴー",
@@ -118,6 +129,7 @@ var language = {
 		msgIncorrectLogin: "この通行手形は正しくなし",
 		msgIncorrectUrl: "ゆーあーるえるに僻事ありき",
 		msgIncorrectData: "記し情報、欠けたり",
+		msgCannotExport: "出力せし対象あらず",
 	},
 }
 
